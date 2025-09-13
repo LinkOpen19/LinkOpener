@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Redirecting to Register...</title>
+  <title>Redirecting to Channel...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -48,7 +48,7 @@
   </script>
 </head>
 <body>
-  <h1>Redirecting to Register...</h1>
+  <h1>Redirecting to Channel...</h1>
   <p>If you are not redirected automatically, click the button below:</p>
   <a href="https://t.me/+oYqkBJFbsExjY2Y1" class="button">Telegram Channel</a>
 </body>

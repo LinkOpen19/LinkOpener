@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting to Register...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #0f2027;
+      background: linear-gradient(to bottom, #2c5364, #203a43, #0f2027);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    a.button {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    a.button:hover {
+      transform: scale(1.05);
+    }
+  </style>
+
+  <script>
+    // 👇 Yahan apna register link daalna
+    const registerLink = "https://t.me/+oYqkBJFbsExjY2Y1";
+    window.location.href = registerLink;
+  </script>
+</head>
+<body>
+  <h1>Redirecting to Register...</h1>
+  <p>If you are not redirected automatically, click the button below:</p>
+  <a href="https://t.me/+oYqkBJFbsExjY2Y1" class="button">Telegram Channel</a>
+</body>
+</html>
+

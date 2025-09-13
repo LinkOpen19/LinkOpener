@@ -2,130 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Redirecting to Channel...</title>
+  <title>Redirecting to Telegram...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background: linear-gradient(to bottom, #2c5364, #203a43, #0f2027);
-      color: white;
-      display:flex; align-items:center; justify-content:center;
-      height:100vh; margin:0; font-family: sans-serif; text-align:center;
-      padding:20px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
     }
-    .box { max-width:420px; width:100%; }
-    h1 { margin:0 0 12px; font-size:20px; }
-    p { margin:0 0 16px; color:#cbd5e1; }
+    h1 {
+      margin-bottom: 20px;
+    }
     a.button {
-      padding:14px 28px; background:linear-gradient(135deg,#ff416c,#ff4b2b);
-      color:#fff; font-size:1.05rem; font-weight:700; border-radius:10px;
-      text-decoration:none; display:inline-block; box-shadow:0 6px 18px rgba(0,0,0,0.35);
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
     }
-    .muted { margin-top:10px; color:#9fb0c6; font-size:13px; }
-    .loader { margin:22px auto 12px; width:36px; height:36px; border-radius:50%;
-      border:4px solid rgba(255,255,255,0.12); border-top-color:#f59e0b; animation:spin 1s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    a.button:hover {
+      transform: scale(1.05);
+    }
   </style>
-
-  <!-- meta-refresh fallback (will be replaced by JS when channel available) -->
-  <meta id="meta-fallback" http-equiv="refresh" content="6;url=https://t.me/+oYqkBJFbsExjY2Y1">
 </head>
 <body>
-  <div class="box">
-    <div class="loader" aria-hidden="true"></div>
-    <h1>Opening Telegram...</h1>
-    <p>If nothing happens automatically, tap the button below to open the channel.</p>
-    <div id="manual">
-      <a class="button" href="https://t.me/+oYqkBJFbsExjY2Y1" target="_blank" rel="noopener noreferrer">Open Telegram Channel</a>
-    </div>
-    <div class="muted">Make sure your device allows opening external apps.</div>
-  </div>
+  <h1>Redirecting to Telegram...</h1>
+  <p>If you are not redirected automatically, click below:</p>
+  <a id="joinBtn" class="button">Open Telegram</a>
 
-<script>
-(function(){
-  // ---------- CONFIG ----------
-  // Either set a direct invite URL (like you have), or a username (without @).
-  // If you switch to username later (e.g., "MyChannelName"), the code will try intent/tg schemes.
-  const configured = {
-    // Use your current invite link:
-    invite: "https://t.me/+oYqkBJFbsExjY2Y1",
-    // OR if you had a username: username: "YourChannelName"
-    username: null
-  };
-  // --------------------------------
+  <script>
+    // Tumhara private channel invite link
+    const inviteLink = "https://t.me/+oYqkBJFbsExjY2Y1";
 
-  // Helper: set manual button + meta fallback
-  function setFallback(url){
-    const linkHTML = '<a class="button" href="' + url + '" target="_blank" rel="noopener noreferrer">Open Telegram Channel</a>';
-    document.getElementById('manual').innerHTML = linkHTML;
-    const meta = document.getElementById('meta-fallback');
-    if(meta) meta.content = "5;url=" + url;
-  }
+    // App link scheme (tg://)
+    const appLink = inviteLink.replace("https://t.me/", "tg://");
 
-  // Try to open using best strategy
-  function tryOpenInvite(inviteUrl){
-    // Directly navigate to invite URL, but use fallback timer to avoid getting stuck
-    let fallbackTimer = setTimeout(function(){ window.location = inviteUrl; }, 900);
+    // Button link set karna
+    document.getElementById("joinBtn").href = inviteLink;
 
-    // Listen for visibility change — if page becomes hidden, app likely opened; cancel fallback
-    function cancel(){
-      clearTimeout(fallbackTimer);
-      document.removeEventListener('visibilitychange', cancel);
-      window.removeEventListener('pagehide', cancel);
+    // Auto redirect
+    function openTelegram() {
+      window.location = appLink;
+      setTimeout(() => {
+        window.location = inviteLink;
+      }, 2000);
     }
-    document.addEventListener('visibilitychange', cancel);
-    window.addEventListener('pagehide', cancel);
 
-    // First try location assign (will open browser or app depending on device)
-    try { window.location = inviteUrl; } catch(e){ /* ignore */ }
-  }
-
-  function tryOpenByUsername(name){
-    const webFallback = 'https://t.me/' + name;
-    const appUri = 'tg://resolve?domain=' + name;
-    const intentUri = 'intent://resolve?domain=' + name + '#Intent;package=org.telegram.messenger;scheme=tg;end';
-
-    // Attempt intent first (Chrome on Android), then tg://, then fallback to web
-    let fallbackTimer = setTimeout(function(){ window.location = webFallback; }, 900);
-
-    function cancel(){
-      clearTimeout(fallbackTimer);
-      document.removeEventListener('visibilitychange', cancel);
-      window.removeEventListener('pagehide', cancel);
-    }
-    document.addEventListener('visibilitychange', cancel);
-    window.addEventListener('pagehide', cancel);
-
-    // Try intent
-    try { window.location = intentUri; } catch(e){ /* ignore */ }
-
-    // Slight delay then try tg://
-    setTimeout(function(){
-      try { window.location = appUri; } catch(e){ /* ignore */ }
-    }, 120);
-  }
-
-  // Main logic: pick username vs invite
-  if (configured.username && configured.username.trim().length > 0){
-    const name = configured.username.trim();
-    setFallback('https://t.me/' + name);
-    // Try open by username
-    tryOpenByUsername(name);
-  } else if (configured.invite && configured.invite.trim().length > 0){
-    const invite = configured.invite.trim();
-    setFallback(invite);
-    tryOpenInvite(invite);
-  } else {
-    // No config — show manual link placeholder
-    setFallback('https://t.me/');
-  }
-
-  // also allow user tapping anywhere to retry
-  document.body.addEventListener('click', function(){ 
-    if (configured.username) tryOpenByUsername(configured.username);
-    else if (configured.invite) tryOpenInvite(configured.invite);
-  }, {passive:true});
-
-})();
-</script>
+    openTelegram();
+  </script>
 </body>
 </html>

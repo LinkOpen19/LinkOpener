@@ -2,28 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Redirecting to Telegram...</title>
+  <title>Redirecting to Link...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
+      background: #0f2027;
       background: linear-gradient(to bottom, #2c5364, #203a43, #0f2027);
-      color: #fff;
+      color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       text-align: center;
       padding: 20px;
     }
+
     h1 {
       margin-bottom: 20px;
     }
+
     a.button {
       padding: 14px 28px;
       background: linear-gradient(135deg, #ff416c, #ff4b2b);
-      color: #fff;
+      color: white;
       font-size: 1.2rem;
       font-weight: bold;
       border-radius: 10px;
@@ -31,35 +34,21 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       transition: transform 0.2s ease;
     }
+
     a.button:hover {
       transform: scale(1.05);
     }
   </style>
-</head>
-<body>
-  <h1>Redirecting to Telegram...</h1>
-  <p>If you are not redirected automatically, click below:</p>
-  <a id="joinBtn" class="button">Open Telegram</a>
 
   <script>
-    // Tumhara private channel invite link
-    const inviteLink = "https://t.me/+oYqkBJFbsExjY2Y1";
-
-    // App link scheme (tg://)
-    const appLink = inviteLink.replace("https://t.me/", "tg://");
-
-    // Button link set karna
-    document.getElementById("joinBtn").href = inviteLink;
-
-    // Auto redirect
-    function openTelegram() {
-      window.location = appLink;
-      setTimeout(() => {
-        window.location = inviteLink;
-      }, 2000);
-    }
-
-    openTelegram();
+    // 👇 Yahan apna register link daalna
+    const registerLink = "https://t.me/+oYqkBJFbsExjY2Y1";
+    window.location.href = registerLink;
   </script>
+</head>
+<body>
+  <h1>Redirecting to Register...</h1>
+  <p>If you are not redirected automatically, click the button below:</p>
+  <a href="https://t.me/+oYqkBJFbsExjY2Y1" class="button">Go to Link</a>
 </body>
 </html>
